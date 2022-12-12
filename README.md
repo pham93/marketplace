@@ -1,9 +1,7 @@
 # Installation
  ### Install
  ```yarn install```
- # Start Database
- ```yarn migration```
- 
+
  
  ### Environments
  create .env in project root
@@ -20,6 +18,9 @@ MARKETPLACE_SERVICE_NAME=marketplace_service
 MARKETPLACE_SERVICE_HOST=127.0.0.1
 MARKETPLACE_SERVICE_PORT=4201
  ```
+ 
+  # Start Database
+ ```yarn migration```
  
  this will createt a `sqlite` database and generate typings for the schema
 
