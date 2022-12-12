@@ -25,7 +25,7 @@ async function bootstrap() {
     new FastifyAdapter()
   );
 
-  const globalPrefix = process.env.API_PREFIX || 'api';
+  const globalPrefix = process.env.GATEWAY_API_PREFIX || 'api';
   app.setGlobalPrefix(globalPrefix);
 
   app.useGlobalPipes(new ValidationPipe());
@@ -38,7 +38,7 @@ async function bootstrap() {
 
   proxies(app);
 
-  const port = process.env.PORT || 4200;
+  const port = process.env.GATEWAY_PORT || 4200;
   await app.listen(port);
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
