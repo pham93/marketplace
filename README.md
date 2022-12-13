@@ -30,7 +30,7 @@ MARKETPLACE_SERVICE_PORT=4201
 # Start up Backend services
 ``` yarn nx run backend-marketplace-service:serve```
 
-# Sart API Gateway and reverse proxy
+# Start API Gateway and reverse proxy
 ```yarn nx run backend-api-gateway:serve```
 this is the bridge that connect to all backend services and frontend app
 
