@@ -8,7 +8,7 @@
  ```
  DATABASE_URL="file:./dev.sqlite"
 
-JWT_KEY=${provide value here}
+JWT_KEY=${provide value here. This van be any passphrase}
 
 #Services
 GATEWAY_PORT=4200
@@ -36,6 +36,8 @@ this is the bridge that connect to all backend services and frontend app
 
 application is running on port 4200
 ```http://localhost:4200/app/login```
+
+Note: This is harcoded to only work with Goerli testnet.
 
 
 
