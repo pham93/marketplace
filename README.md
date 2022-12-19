@@ -6,17 +6,31 @@
  ### Environments
  create .env in project root
  ```
- DATABASE_URL="file:./dev.sqlite"
+DATABASE_URL="file:./dev.sqlite"
 
-JWT_KEY=${provide value here. This van be any passphrase}
 
-#Services
-GATEWAY_PORT=4200
+# =========== API GATEWAY  =====================
+API_GATEWAY_PORT=5678
+API_GATEWAY_NAME=localhost
+API_GATEWAY_URL=http://localhost:5678
 GATEWAY_API_PREFIX=api
 
 MARKETPLACE_SERVICE_NAME=marketplace_service
 MARKETPLACE_SERVICE_HOST=127.0.0.1
 MARKETPLACE_SERVICE_PORT=4201
+
+# =========== Auth Service =================
+DOMAIN=localhost
+CHAIN_ID=5
+THIRD_WEB_AUTH_KEY=${private wallet key}
+
+
+REDIRECT_URL=/
+# Used to encrypt the NextAuth.js JWT, and to hash email verification tokens.
+# This is the default value for the secret option in NextAuth and Middleware.
+NEXTAUTH_SECRET=${secret, can be anything here}
+NEXTAUTH_URL=http://localhost:4200
+JWT_KEY=${secret, can be anything here}
  ```
  
   # Start Database
@@ -31,6 +45,7 @@ MARKETPLACE_SERVICE_PORT=4201
 ``` yarn nx run backend-marketplace-service:serve```
 
 # Start API Gateway and reverse proxy
+```yarn nx run backend-auth-service:serve```
 ```yarn nx run backend-api-gateway:serve```
 this is the bridge that connect to all backend services and frontend app
 
