@@ -1,7 +1,7 @@
 {
-  "name": "frontend-marketplace-app",
+  "name": "backend-auth-service",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/frontend/marketplace-app",
+  "sourceRoot": "packages/backend/auth-service",
   "projectType": "application",
   "targets": {
     "build": {
@@ -9,12 +9,12 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "root": "packages/frontend/marketplace-app",
-        "outputPath": "dist/packages/frontend/marketplace-app"
+        "root": "packages/backend/auth-service",
+        "outputPath": "dist/packages/backend/auth-service"
       },
       "configurations": {
         "development": {
-          "outputPath": "packages/frontend/marketplace-app"
+          "outputPath": "packages/backend/auth-service"
         },
         "production": {}
       }
@@ -23,17 +23,16 @@
       "executor": "@nrwl/next:server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "frontend-marketplace-app:build",
-        "dev": true,
-        "port": 5001
+        "buildTarget": "backend-auth-service:build",
+        "dev": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "frontend-marketplace-app:build:development",
+          "buildTarget": "backend-auth-service:build:development",
           "dev": true
         },
         "production": {
-          "buildTarget": "frontend-marketplace-app:build:production",
+          "buildTarget": "backend-auth-service:build:production",
           "dev": false
         }
       }
@@ -41,14 +40,14 @@
     "export": {
       "executor": "@nrwl/next:export",
       "options": {
-        "buildTarget": "frontend-marketplace-app:build:production"
+        "buildTarget": "backend-auth-service:build:production"
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "packages/frontend/marketplace-app/jest.config.ts",
+        "jestConfig": "packages/backend/auth-service/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -57,7 +56,7 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "packages/frontend/marketplace-app/**/*.{ts,tsx,js,jsx}"
+          "packages/backend/auth-service/**/*.{ts,tsx,js,jsx}"
         ]
       }
     }

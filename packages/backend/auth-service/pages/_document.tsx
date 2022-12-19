@@ -22,23 +22,8 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>{CssBaseline.flush()}</Head>
         <body>
-          <Image
-            src="/images/gradient-right-dark.svg"
-            css={{ position: 'fixed', top: '-20%', right: '-60%' }}
-            alt="top right background gradient"
-          />
-          <Image
-            src="/images/gradient-left-dark.svg"
-            css={{
-              position: 'fixed',
-              bottom: '-50%',
-              right: '-50%',
-              left: '-10%',
-            }}
-            alt="bottom left"
-          />
-          <Main />
-          <NextScript />
+            <Main />
+            <NextScript />
         </body>
       </Html>
     );

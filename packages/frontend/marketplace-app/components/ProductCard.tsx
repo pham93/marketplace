@@ -1,14 +1,12 @@
 import { Row, Card, Text, Col, Button, Loading } from '@nextui-org/react';
-import { useEffect } from 'react';
+import { useAddress, useUser } from '@thirdweb-dev/react';
 import { useProduct } from '../hooks';
 import { Product } from '../pages/products';
 
 export const ProductCard = ({ product }: { product: Product }) => {
   const { buy, loading } = useProduct();
+  const { user } = useUser();
 
-  useEffect(() => {
-    console.log('loading', loading);
-  }, [loading]);
   return (
     <Card css={{ width: '300px', height: '400px', margin: '1rem' }}>
       <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
@@ -44,7 +42,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
               rounded
               bordered
               color="gradient"
-              onPress={buy}
+              onPress={() => buy(product.id, user?.address)}
               disabled={product.stock !== 'Buy'}
             >
               {loading && (

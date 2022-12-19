@@ -1,15 +1,26 @@
 import { ethers } from 'ethers';
-import { Products as ProductsContract } from '@contracts';
+// import { Products as ProductsContract } from '@contracts';
 import abi from '../contracts/products.abi.json';
 import { useState } from 'react';
+import axios, { AxiosResponse } from 'axios';
+import { Order, Prisma } from '@prisma/client';
 
 const contractAddress = '0x1A351a87055C333D01fc4939EAd9379c177Ca983';
 const contractInterface =
   abi.output.contracts['contracts/Products.sol'].Products.abi;
 
+const updateOrder = async (order: Prisma.OrderUncheckedCreateInput) => {
+  await axios.post<
+    Order,
+    AxiosResponse<Order>,
+    Prisma.OrderUncheckedCreateInput
+  >('/rest/api/order', order, { withCredentials: true });
+};
+
 export const useProduct = () => {
   const [loading, setLoading] = useState(false);
-  const buy = async () => {
+
+  const buy = async (productId: string, address) => {
     if (!window.ethereum) {
       return;
     }
@@ -22,9 +33,9 @@ export const useProduct = () => {
       contractAddress,
       contractInterface,
       signer
-    ) as ProductsContract;
+    );
 
-    await contract
+    const buyItem = await contract
       .buy('anon', 'buy shirt', {
         value: ethers.utils.parseEther('0.0001'),
       })
@@ -32,8 +43,23 @@ export const useProduct = () => {
         console.error(e);
         setLoading(false);
       });
-    contract.on('t', () => {
+    await updateOrder({
+      productId,
+      quantity: 1,
+      status: 'PENDING',
+      transaction: buyItem.hash,
+      userId: address,
+    });
+
+    contract.on('t', async () => {
       setLoading(false);
+      await updateOrder({
+        productId,
+        quantity: 1,
+        status: 'SUCCESSFUL',
+        transaction: buyItem.hash,
+        userId: address,
+      });
     });
   };
 
