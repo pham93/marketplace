@@ -1,9 +1,8 @@
-import { Controller, Get, Inject, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { Order } from '@prisma/client';
 
 @Controller()
-@UseGuards(JwtAuthGuard)
 export class MarketplaceController {
   constructor(
     @Inject(process.env.MARKETPLACE_SERVICE_NAME)
@@ -13,5 +12,15 @@ export class MarketplaceController {
   @Get('/products')
   getProducts() {
     return this.marketplaceService.send({ cmd: 'getProducts' }, {});
+  }
+
+  @Post('/order')
+  upsertOrder(@Body() order: Order) {
+    return this.marketplaceService.send({ cmd: 'addOrder' }, order);
+  }
+
+  @Get('/allorders/:userId')
+  allOrders(@Param('userId') userId: string) {
+    return this.marketplaceService.send({ cmd: 'allOrder' }, userId);
   }
 }

@@ -1,11 +1,8 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { ProxyMiddleware } from '../middleware/proxy-middleware';
 
 import { MarketplaceController } from './app.controller';
-import { AuthModule } from './auth/auth.module';
-import { CommonModule } from './common/common.module';
 import { PrismaService } from './common/prisma.service';
 
 @Module({
@@ -24,8 +21,6 @@ import { PrismaService } from './common/prisma.service';
         },
       },
     ]),
-
-    AuthModule,
   ],
   controllers: [MarketplaceController],
   providers: [PrismaService],

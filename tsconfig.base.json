@@ -16,7 +16,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@bingchilling/contracts": ["libs/solidity/contracts/src/index.ts"],
       "@contracts": ["contracts/typechain-types/index"],
       "@sharedto/*": ["packages/backend/api-interfaces/*"]
     }

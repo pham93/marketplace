@@ -25,19 +25,17 @@ const Transition = ({ children }: React.PropsWithChildren) => {
   const { asPath } = useRouter();
 
   return (
-    <Container as="div" css={{ height: '100vh' }}>
-      <AnimatePresence initial={false} exitBeforeEnter>
-        <motion.div
-          key={asPath}
-          variants={variants}
-          animate="in"
-          initial="out"
-          exit="out"
-        >
-          {children}
-        </motion.div>
-      </AnimatePresence>
-    </Container>
+    <AnimatePresence initial={false} exitBeforeEnter>
+      <motion.div
+        key={asPath}
+        variants={variants}
+        animate="in"
+        initial="out"
+        exit="out"
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

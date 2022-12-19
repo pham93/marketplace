@@ -1,52 +1,50 @@
-import { Container, Row } from '@nextui-org/react';
+import { Row } from '@nextui-org/react';
+import axios, { AxiosResponse } from 'axios';
+import { use } from 'react';
+import { Box } from '../components/Box';
 import { ProductCard } from '../components/ProductCard';
 
+const getProducts = async () =>
+  await axios.get<Product[]>('/api/products', {
+    withCredentials: true,
+    baseURL: process.env.API_GATEWAY_URL,
+  });
+
 export interface Product {
+  id: string;
   name: string;
   image: string;
   stock: 'Sold Out' | 'Buy' | 'Soon';
 }
 
-export function Products() {
-  const items = [
-    {
-      name: 'Red T-shirt',
-      image:
-        'https://cdn.shopify.com/s/files/1/2072/5133/products/OF_Tee_Red_1200x1200.jpg?v=1603829964',
-      stock: 'Sold Out',
-    },
-    {
-      name: 'Blue T-shirt',
-      image: 'https://mv.unitheme.net/images/detailed/1/t-7.jpg',
-      stock: 'Buy',
-    },
-    {
-      name: 'Green T-shirt',
-      image:
-        'http://cache.mrporter.com/variants/images/43769801097207191/in/w2000_q60.jpg',
-      stock: 'Buy',
-    },
-    {
-      name: 'Yellow T-shirt',
-      image:
-        'https://imgprd19.hobbylobby.com/9/5f/26/95f264323ae49e65b2a53a909fcd7d9ee659f3c7/350Wx350H-422519-0320.jpg',
-      stock: 'Soon',
-    },
-  ] as Product[];
+interface ProductPageProps {
+  products: Product[];
+}
 
+export function Products({ products }: ProductPageProps) {
   return (
-    <Container
-      alignItems="center"
-      justify="center"
-      display="flex"
-      css={{ height: '100vh', display: 'flex' }}
+    <Box
+      css={{
+        height: '100vh',
+        display: 'flex',
+        padding: 0,
+        maxWidth: '100% !important',
+      }}
     >
       <Row justify="center" align="center">
-        {items.map((item) => {
+        {products?.map((item) => {
           return <ProductCard key={item.name} product={item} />;
         })}
       </Row>
-    </Container>
+    </Box>
   );
 }
 export default Products;
+
+export async function getServerSideProps<ProductPageProps>(context) {
+  const response = await getProducts();
+  const products = response.data;
+  return {
+    props: { products }, // will be passed to the page component as props
+  };
+}
